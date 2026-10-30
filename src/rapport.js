@@ -14,10 +14,33 @@ export function listerParEtat(alertes, etat) {
 
 // Renvoie le texte complet du rapport (voir fiches/5-equipe-rapport.md).
 export function construireRapport(donnees, date) {
-  throw new Error("TODO Équipe : coder construireRapport dans src/rapport.js");
+  const { parcelles, cultures, releves, recoltes } = donnees;
+  const alertes = alertesIrrigation(parcelles, releves, cultures);
+  const bilan = bilanRecoltes(parcelles, recoltes, cultures);
+  const production = bilan.reduce((total, ligne) => total + ligne.kg, 0);
+  const revenuTotal = bilan.reduce((total, ligne) => total + ligne.revenu, 0);
+  const meilleure = classerParRevenu(bilan)[0];
+
+  const lignes = [
+    `=== RAPPORT AGRISUIVI DU ${date} ===`,
+    `Parcelles suivies : ${parcelles.length}`,
+    `Surface totale : ${surfaceTotale(parcelles)} ha`,
+    "",
+    "--- Irrigation ---",
+    `À arroser : ${listerParEtat(alertes, "ARROSER")}`,
+    `À drainer : ${listerParEtat(alertes, "DRAINER")}`,
+    `Sans relevé : ${listerParEtat(alertes, "INCONNU")}`,
+    "",
+    "--- Récoltes ---",
+    `Production totale : ${production} kg`,
+    `Revenu estimé : ${revenuTotal} FCFA`,
+    `Meilleure parcelle : ${meilleure.id} (${meilleure.producteur}) avec ${meilleure.revenu} FCFA`,
+  ];
+  // Le rapport se termine par un retour à la ligne.
+  return lignes.join("\n") + "\n";
 }
 
 // Écrit le texte dans le fichier demandé. Crée le dossier s'il n'existe pas.
 export async function enregistrerRapport(chemin, texte) {
-  throw new Error("TODO Équipe : coder enregistrerRapport dans src/rapport.js");
+
 }
