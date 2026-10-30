@@ -17,21 +17,54 @@ export async function lireJson(chemin) {try {
 // Lit les quatre fichiers EN MÊME TEMPS avec Promise.all.
 // Renvoie { parcelles, cultures, releves, recoltes }.
 export async function chargerDonnees(dossier) {
-onst [parcelles, cultures, releves, recoltes] = await Promise.all([
+
+  const [parcelles, cultures, releves, recoltes] = await Promise.all([
+
     lireJson(join(dossier, "parcelles.json")),
+
     lireJson(join(dossier, "cultures.json")),
+
     lireJson(join(dossier, "releves.json")),
+
     lireJson(join(dossier, "recoltes.json")),
+
   ]);
 
   return { parcelles, cultures, releves, recoltes };
+
 }
 
 // Vérifie les textes tapés dans le terminal et renvoie un nouveau relevé.
 // Exemple : creerReleve('p07', '64', '29', '2026-10-29')
 //   → { parcelle: 'P07', date: '2026-10-29', humidite: 64, temperature: 29 }
 export function creerReleve(parcelle, humiditeTexte, temperatureTexte, date) {
-  throw new Error("TODO Membre 4 : coder creerReleve dans src/donnees.js");
+
+  if (!parcelle) {
+    throw new Error("La parcelle est obligatoire");
+  }
+
+  const humidite = Number(humiditeTexte);
+  const temperature = Number(temperatureTexte);
+
+  if (
+    Number.isNaN(humidite) ||
+    humidite < 0 ||
+    humidite > 100
+  ) {
+    throw new Error("L'humidité doit être un nombre entre 0 et 100");
+  }
+
+  if (Number.isNaN(temperature)) {
+    throw new Error("La température doit être un nombre");
+  }
+
+  return {
+    parcelle: parcelle.toUpperCase(),
+    date: date,
+    humidite: humidite,
+    temperature: temperature
+  };
+
 }
 
 // Ajoute le relevé à la fin du fichier JSON, enregistre le fichier,
