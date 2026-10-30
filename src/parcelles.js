@@ -32,11 +32,14 @@ export function surfaceTotale(parcelles) {
 export function resumeParCulture(parcelles) {
   const resume = {};
   for(const parcelle of parcelles){
-    if(resume[parcelle.culture] === undefined) {
-      resume[parcelle.culture] = {
-        nombre: 0, surface: 0
+    const culture = parcelle.culture;
+    if (!resume[culture]) {
+      resume[culture] = {
+        nombre: 0, 
+        surface: 0
       };
     } resume[parcelle.culture].nombre += 1;
     resume[parcelle.culture].surface += parcelle.surface;
 }
+return resume;
 }
