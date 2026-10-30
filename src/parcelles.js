@@ -9,16 +9,17 @@ export function formaterParcelle(parcelle) {
 
 // Renvoie la parcelle dont l'id est demandé, ou undefined si elle n'existe pas.
 export function trouverParcelle(parcelles, id) {
-  throw new Error(
-    "TODO Membre 1 : coder trouverParcelle dans src/parcelles.js",
-  );
+  return parcelles.find((parcelles) => {
+    return parcelles.id === id
+  })
 }
 
 // Renvoie un nouveau tableau avec seulement les parcelles de cette culture.
 export function parcellesParCulture(parcelles, culture) {
-  throw new Error(
-    "TODO Membre 1 : coder parcellesParCulture dans src/parcelles.js",
-  );
+  return parcelles.filter(
+    (parcelles) => {
+      return parcelles.culture === culture
+    } )
 }
 
 // Renvoie la somme des surfaces (en hectares). Liste vide : 0.

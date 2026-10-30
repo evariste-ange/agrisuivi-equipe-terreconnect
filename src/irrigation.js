@@ -19,15 +19,31 @@ export function moyenneHumidite(releves) {
 // Renvoie 'INCONNU', 'ARROSER', 'DRAINER' ou 'OK'.
 // Les bornes humiditeMin et humiditeMax font partie de la zone 'OK'.
 export function etatIrrigation(humidite, culture) {
-  throw new Error(
-    "TODO Membre 2 : coder etatIrrigation dans src/irrigation.js",
-  );
+  if (humidite === null) {
+    return "INCONNU";
+  }
+  if (humidite < culture.humiditeMin) {
+    return "ARROSER";
+  }
+  if (humidite > culture.humiditeMax) {
+    return "DRAINER";
+  }
+  return "OK";
+    
 }
 
 // Renvoie un tableau d'alertes, une par parcelle, dans le même ordre que parcelles.
 // Chaque alerte : { id, producteur, culture, moyenne, etat }
 export function alertesIrrigation(parcelles, releves, cultures) {
-  throw new Error(
-    "TODO Membre 2 : coder alertesIrrigation dans src/irrigation.js",
-  );
+  return parcelles.map((parcelle) => {
+    const culture = cultures.find((element) => element.code === parcelle.culture);
+    const moyenne = moyenneHumidite(relevesDeParcelle(releves, parcelle.id));
+    return {
+      id: parcelle.id,
+      producteur: parcelle.producteur,
+      culture: parcelle.culture,
+      moyenne,
+      etat: etatIrrigation(moyenne, culture),
+    };
+  });
 }
