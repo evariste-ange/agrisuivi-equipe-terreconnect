@@ -14,13 +14,15 @@ export function rendement(kg, surface) {
   if(surface <= 0){
     throw new RangeError("La surface doit etre supérieur à 0")
   } return Math.round(kg / surface)
-  
   return kg*prixKg
 }
 
 // Renvoie le revenu estimé en FCFA.
 export function revenu(kg, prixKg) {
-  throw new Error("TODO Membre 3 : coder revenu dans src/recoltes.js");
+  const kilos = recolte.kg
+  const pkg = cultures.prixKg
+  const revenu = kilos * pkg
+  return revenu,"FCFA"
 }
 
 // Renvoie une ligne de bilan par parcelle, dans le même ordre que parcelles.
