@@ -19,10 +19,8 @@ export function rendement(kg, surface) {
 
 // Renvoie le revenu estimé en FCFA.
 export function revenu(kg, prixKg) {
-  const kilos = recolte.kg
-  const pkg = cultures.prixKg
-  const revenu = kilos * pkg
-  return revenu,"FCFA"
+  const resultat = kg * prixKg
+  return resultat
 }
 
 // Renvoie une ligne de bilan par parcelle, dans le même ordre que parcelles.
